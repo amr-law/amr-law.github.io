@@ -1,0 +1,132 @@
+  .main-nav a:active{background:var(--cream-2)}
+
+  /* Hero: on phones the portrait occupies the upper visual zone and text sits below it. */
+  .hero{
+    min-height:0;
+    display:block;
+    padding:400px 0 28px;
+    background-size:auto 420px;
+    background-position:66% 0;
+    background-color:#e9ddd2;
+  }
+  .hero::before{
+    background:linear-gradient(180deg,rgba(252,249,245,0) 0%,rgba(252,249,245,.02) 43%,rgba(252,249,245,.74) 73%,var(--paper) 96%);
+  }
+  .hero-content{min-height:0;display:block}
+  .hero-copy{width:100%;max-width:none;padding:20px 18px 18px;border:1px solid rgba(217,201,187,.86);border-radius:22px;background:rgba(252,249,245,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 14px 38px rgba(59,41,35,.09)}
+  .eyebrow{font-size:10px;letter-spacing:.2em;gap:9px}
+  .eyebrow::before{width:28px}
+  h1{margin-top:11px;font-size:clamp(39px,11.1vw,48px);line-height:.98;letter-spacing:-.04em}
+  .hero-lead{margin-top:17px;font-size:14px;line-height:1.58}
+  .hero-note{margin-top:8px;font-size:12.5px;line-height:1.58}
+  .hero-facts{gap:9px 15px;margin-top:18px}
+  .hero-facts span{font-size:11.5px}
+  .hero-actions{margin-top:20px;gap:9px;flex-direction:column}
+  .button{width:100%;min-height:48px;border-radius:13px;font-size:12.5px}
+
+  /* Section rhythm */
+  .section{padding:56px 0}
+  .section-title{margin-bottom:24px;padding-bottom:13px;gap:10px;align-items:center}
+  .section-title h2{font-size:clamp(31px,9vw,38px);line-height:1.02}
+  .section-icon{width:38px;height:38px;flex:0 0 38px;border-radius:12px}
+  .section-icon svg{width:22px;height:22px}
+
+  /* Experience */
+  .experience-grid,.specialization-grid{gap:14px}
+  .experience-card,.specialization-card{min-height:0;padding:20px;border-radius:21px}
+  .experience-heading{gap:13px}
+  .experience-logo{width:52px;height:52px;flex-basis:52px;border-radius:15px}
+  .experience-logo img{width:42px;height:42px}
+  .ministry-logo img{width:46px;height:46px}
+  .experience-heading span{font-size:8px}
+  .experience-heading h3{margin-top:5px;font-size:24px;line-height:1.07}
+  .experience-card ul{margin-top:19px}
+  .experience-card li{margin:9px 0;padding-left:16px;font-size:13px;line-height:1.5}
+
+  /* Specialization */
+  .specialization-head{gap:13px}
+  .spec-icon{width:52px;height:52px;flex-basis:52px;border-radius:15px}
+  .spec-icon svg{width:30px;height:30px}
+  .specialization-head span{font-size:8px}
+  .specialization-card h3{font-size:25px}
+  .specialization-card>p{margin-top:17px;font-size:13px;line-height:1.55}
+  .spec-points{grid-template-columns:1fr;gap:8px;margin-top:18px}
+  .spec-points span{min-height:50px;padding:10px 11px 10px 34px;border-radius:13px;font-size:12px;line-height:1.35}
+
+  /* Tools and qualities */
+  .skills-panel{margin-top:14px;padding:20px 14px;border-radius:22px}
+  .skills-heading{display:block;padding-bottom:18px}
+  .skills-heading h3{font-size:25px;line-height:1.08}
+  .skills-heading p{margin-top:10px;font-size:12.5px;line-height:1.55}
+  .tool-grid{grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+  .tool-card{min-height:108px;padding:12px 8px;border-radius:16px;gap:7px}
+  .tool-logo{width:48px;height:48px}
+  .tool-logo img{max-width:46px;max-height:46px}
+  .tool-card strong{font-size:10.5px;line-height:1.2}
+  .tool-card:last-child{grid-column:1/-1;min-height:94px;flex-direction:row;gap:13px}
+  .work-principles{grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+  .work-principles span{min-height:54px;padding:10px 10px 10px 31px;border-radius:13px;font-size:10.5px;line-height:1.25}
+  .work-principles span::before{left:11px}
+
+  /* Education */
+  .education-shell{gap:24px}
+  .education-university{grid-template-columns:64px 1fr;gap:15px;padding:17px;border-radius:20px}
+  .university-logo{width:64px;height:64px;border-radius:17px}
+  .education-university img{width:58px;height:58px}
+  .education-university strong{font-size:19px;line-height:1.08}
+  .education-university span{margin-top:6px;font-size:8px}
+  .timeline{padding-left:17px}
+  .timeline::before{left:4px}
+  .timeline-item{grid-template-columns:1fr;gap:5px;padding:8px 0 30px 20px}
+  .timeline-dot{left:-17px;top:13px;width:10px;height:10px}
+  .timeline-year{font-size:20px}
+  .timeline-copy span{font-size:8px}
+  .timeline-copy h3{margin-top:5px;font-size:24px;line-height:1.06}
+  .timeline-copy p{margin-top:6px;font-size:12px;line-height:1.45}
+
+  /* Publications */
+  .publication-list{gap:10px}
+  .publication-row{grid-template-columns:40px minmax(0,1fr);gap:11px;padding:14px;border-radius:17px;align-items:start}
+  .publication-icon{width:40px;height:40px;border-radius:12px}
+  .publication-icon svg{width:21px;height:21px}
+  .publication-copy span{font-size:7.5px;line-height:1.3}
+  .publication-copy h3{margin-top:4px;font-size:13px;line-height:1.4}
+  .download-article{grid-column:2;width:auto;min-width:42px;height:38px;padding:0 12px;justify-self:start;border-radius:11px;margin-top:2px}
+  .download-article::after{content:'Скачать';margin-left:7px;font-family:var(--sans);font-size:10px;font-weight:700}
+  .download-article svg{width:17px;height:17px}
+  .conference{margin-top:14px;padding:19px;grid-template-columns:48px 1fr;gap:13px;border-radius:20px;align-items:start}
+  .conference-icon{width:46px;height:46px;border-radius:14px}
+  .conference-icon svg{width:27px;height:27px}
+  .conference span{font-size:8px}
+  .conference h3{font-size:20px;line-height:1.1}
+  .conference p{font-size:11.5px;line-height:1.5}
+
+  /* Footer */
+  .site-footer{padding:58px 0 max(24px,env(safe-area-inset-bottom))}
+  .footer-grid{gap:28px}
+  .footer-lead h2{font-size:42px}
+  .footer-lead p{margin-top:13px;font-size:12.5px;line-height:1.55}
+  .contact-list{grid-template-columns:1fr;gap:9px}
+  .contact-list a,.contact-list>div{min-height:76px;padding:16px;border-radius:15px}
+  .contact-list span{font-size:8px}
+  .contact-list strong{font-size:12.5px}
+  .footer-bottom{margin-top:34px;padding-top:15px;flex-direction:row;align-items:center;gap:12px;font-size:9px}
+  .back-to-top{min-height:44px;min-width:92px;padding:0 14px;border:1px solid rgba(212,178,143,.25);border-radius:999px;color:var(--gold-soft);background:rgba(255,255,255,.04);font:inherit;font-weight:700;cursor:pointer}
+}
+
+@media (max-width:390px){
+  :root{--mobile-pad:12px}
+  .hero{padding-top:372px;background-size:auto 392px;background-position:66% 0}
+  .hero-copy{padding:18px 15px 16px}
+  h1{font-size:38px}
+  .section-title h2{font-size:30px}
+  .experience-card,.specialization-card{padding:18px}
+  .work-principles span{font-size:10px}
+  .publication-copy h3{font-size:12.5px}
+  .footer-bottom{align-items:flex-start;flex-direction:column}
+}
+
+@media (hover:none) and (pointer:coarse){
+  .experience-card:hover,.specialization-card:hover,.tool-card:hover,.publication-row:hover,.contact-list a:hover,.resume-link:hover,.button:hover,.download-article:hover{transform:none;box-shadow:none}
+  .main-nav a,.button,.download-article,.back-to-top,.nav-toggle{touch-action:manipulation}
+}
