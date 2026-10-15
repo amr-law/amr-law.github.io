@@ -1,0 +1,87 @@
+name: Fix three experience cards on desktop
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-experience-three-columns.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix-grid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set definitive three-column desktop grid
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          h = p.read_text(encoding='utf-8')
+          assert 'class="experience-grid"' in h, 'Experience section missing'
+          assert '<h3>Договорная практика</h3>' in h, 'Contract card missing'
+          h, old_count = re.subn(r'<style\s+id="experience-three-column-desktop"[^>]*>.*?</style>\s*', '', h, flags=re.S)
+          h, newer_count = re.subn(r'<style\s+id="experience-three-column-desktop-v2"[^>]*>.*?</style>\s*', '', h, flags=re.S)
+          style = '''<style id="experience-three-column-desktop-v2">
+          /* Only the Practical Experience cards are changed on desktop. */
+          @media screen and (min-width: 901px) {
+            body .section-experience .experience-grid {
+              display: grid !important;
+              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              column-gap: 18px !important;
+              row-gap: 18px !important;
+              align-items: stretch !important;
+            }
+            body .section-experience .experience-grid > .experience-card {
+              grid-column: auto !important;
+              grid-row: auto !important;
+              width: auto !important;
+              min-width: 0 !important;
+              height: 100% !important;
+              box-sizing: border-box !important;
+              padding: clamp(20px, 2vw, 30px) !important;
+            }
+            body .section-experience .experience-card .experience-heading {
+              gap: clamp(9px, 1vw, 16px) !important;
+              align-items: center !important;
+            }
+            body .section-experience .experience-card .experience-heading > div:last-child {
+              min-width: 0 !important;
+            }
+            body .section-experience .experience-card .experience-heading h3 {
+              font-size: clamp(20px, 1.65vw, 29px) !important;
+              line-height: 1.17 !important;
+              overflow-wrap: break-word !important;
+            }
+            body .section-experience .experience-card .experience-logo {
+              width: clamp(46px, 3.4vw, 62px) !important;
+              height: clamp(46px, 3.4vw, 62px) !important;
+              flex: 0 0 clamp(46px, 3.4vw, 62px) !important;
+            }
+            body .section-experience .experience-card li {
+              font-size: clamp(12px, .85vw, 15px) !important;
+              line-height: 1.55 !important;
+            }
+          }
+          </style>'''
+          assert '</body>' in h, 'Closing body tag missing'
+          h = h.replace('</body>', style + '\n</body>', 1)
+          p.write_text(h, encoding='utf-8')
+          print('Verified markup: 3 cards in experience section and overrides added after all styles')
+          print('Legacy override removed', old_count, 'prior v2 removed', newer_count)
+          assert h.count('id="experience-three-column-desktop-v2"') == 1
+          assert 'repeat(3, minmax(0, 1fr)) !important' in h
+      - name: Commit correction
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo 'No site changes needed'
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add index.html
+            git commit -m 'Fix desktop contract practice cards in one row'
+            git push
+          fi
