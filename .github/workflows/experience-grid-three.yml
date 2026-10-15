@@ -1,0 +1,86 @@
+name: Three-column experience layout on desktop
+on:
+  push:
+    paths:
+      - '.github/workflows/experience-grid-three.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Make three experience cards share one desktop row
+        shell: python
+        run: |
+          from pathlib import Path
+
+          page = Path("index.html")
+          html = page.read_text(encoding="utf-8")
+          marker = 'id="experience-three-column-desktop"'
+          if marker in html:
+              print("Desktop experience layout is already updated")
+              raise SystemExit(0)
+
+          assert '</head>' in html, "Missing closing head tag"
+          assert 'class="experience-grid"' in html, "Experience card grid not found"
+          assert '<h3>Договорная практика</h3>' in html, "Third experience card not found"
+          css = """
+          <style id="experience-three-column-desktop">
+          /* All existing site styles remain unchanged. Only the desktop
+             experience section gets a three-column layout. */
+          @media (min-width: 1360px) {
+            .section-experience .experience-grid {
+              display: grid;
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+              gap: 20px;
+              align-items: stretch;
+            }
+            .section-experience .experience-card {
+              min-width: 0;
+              min-height: 0;
+              height: 100%;
+              padding: 27px 25px;
+            }
+            .section-experience .experience-heading { gap: 14px; }
+            .section-experience .experience-heading > div:last-child { min-width: 0; }
+            .section-experience .experience-logo {
+              width: 54px;
+              height: 54px;
+              flex: 0 0 54px;
+            }
+            .section-experience .experience-heading h3 {
+              font-size: clamp(22px, 1.5vw, 28px);
+              line-height: 1.13;
+              overflow-wrap: break-word;
+            }
+            .section-experience .experience-card ul {
+              margin-top: 24px;
+            }
+            .section-experience .experience-card li {
+              font-size: 12.5px;
+              line-height: 1.6;
+            }
+          }
+          </style>
+          """
+          html = html.replace('</head>', css + '\n</head>', 1)
+          page.write_text(html, encoding="utf-8")
+          print("Desktop experience grid updated to 3 columns; tablets and phones unchanged")
+      - name: Commit three-column desktop layout
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No site changes needed"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Align three practice cards in one desktop row"
+            git push
+          fi
