@@ -1,0 +1,62 @@
+name: Update contract practice section
+on:
+  push:
+    paths:
+      - '.github/workflows/contract-practice.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Insert contract practice into existing site
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+          if "<h3>Договорная практика</h3>" in s:
+              print("Already updated")
+              raise SystemExit(0)
+          section_start = s.find('<section class="section section-experience"')
+          section_end = s.find('<section class="section section-specialization"', section_start)
+          assert section_start >= 0 and section_end > section_start, "Experience section not found"
+          before = s[:section_start]
+          area = s[section_start:section_end]
+          after = s[section_end:]
+          target = "        </div>\n      </div>\n    </section>"
+          assert target in area, "Experience layout closing marker not found"
+          insertion = """
+          <article class="experience-card reveal" data-delay="180">
+            <div class="experience-heading">
+              <div class="experience-logo document-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64"><path d="M18 8h23l9 9v39H18zM41 8v11h9M25 29h18M25 37h18M25 45h13"/></svg>
+              </div>
+              <div><span>Гражданско-правовые договоры</span><h3>Договорная практика</h3></div>
+            </div>
+            <ul>
+              <li>Составление и правовой анализ различных видов гражданско-правовых договоров.</li>
+              <li>Проверка условий договора на предмет юридических рисков и соответствия законодательству.</li>
+              <li>Подготовка и корректировка договорной документации.</li>
+              <li>Сопровождение договорной работы на стадии подготовки и согласования условий.</li>
+            </ul>
+          </article>
+          """
+          area = area.replace(target, insertion + "\n" + target, 1)
+          p.write_text(before + area + after, encoding="utf-8")
+          print("Inserted contract practice section; preserved existing site assets")
+      - name: Commit updated website
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes needed"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Add contract practice to experience section"
+            git push
+          fi
