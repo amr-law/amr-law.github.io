@@ -225,6 +225,45 @@
 }
 
 </style>
+
+<style id="experience-three-column-desktop">
+/* All existing site styles remain unchanged. Only the desktop
+   experience section gets a three-column layout. */
+@media (min-width: 1360px) {
+  .section-experience .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+  .section-experience .experience-card {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    padding: 27px 25px;
+  }
+  .section-experience .experience-heading { gap: 14px; }
+  .section-experience .experience-heading > div:last-child { min-width: 0; }
+  .section-experience .experience-logo {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+  }
+  .section-experience .experience-heading h3 {
+    font-size: clamp(22px, 1.5vw, 28px);
+    line-height: 1.13;
+    overflow-wrap: break-word;
+  }
+  .section-experience .experience-card ul {
+    margin-top: 24px;
+  }
+  .section-experience .experience-card li {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
